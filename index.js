@@ -1,3 +1,14 @@
-const h2 = document.createElement("h2");
-h2.textContent = "This content added by JavaScript";
-document.querySelector("body").appendChild(h2);
+fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", {
+  headers: {
+    Accept: "application/json"
+  }
+})
+.then(resp => resp.json())
+.then(data => data.forEach(character => {
+    const newChar = document.createElement("div");
+    const charDiv = document.querySelector("#character-div");
+    newChar.innerHTML = `
+    <img src="${character.images.icon}" width="50">
+    `
+    charDiv.appendChild(newChar);
+}))

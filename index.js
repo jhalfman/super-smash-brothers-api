@@ -12,6 +12,7 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
     `
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
+      e.target.style["background-color"] = "blue";
       const mainCharDiv = document.querySelector("#character-selected");
 
       let gameFranchise = `Game Franchise: ${character.series.name}`;
@@ -40,6 +41,15 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
       console.log(character);
       mainCharDiv.appendChild(mainChar);
     })
+
+    newChar.addEventListener("mouseenter", e => {
+      e.target.style["background-color"] = "orange";
+    })
+
+    newChar.addEventListener("mouseleave", e => {
+      e.target.style["background-color"] = "white";
+    })
+
     charDiv.appendChild(newChar);
 }))
 
@@ -89,6 +99,14 @@ gameButtonArray.forEach(button => button.addEventListener("click", e => {
       mainChar.appendChild(franchise);
 
       mainCharDiv.appendChild(mainChar);
+    })
+
+    newChar.addEventListener("mouseenter", e => {
+      e.target.style["background-color"] = "orange";
+    })
+
+    newChar.addEventListener("mouseleave", e => {
+      e.target.style["background-color"] = "white";
     })
 
     charDiv.appendChild(newChar);

@@ -14,19 +14,28 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
       const mainChar = document.createElement("div");
       const mainCharDiv = document.querySelector("#character-selected");
 
+      let gameFranchise = `Game Franchise: ${character.series.name}`;
+      const franchise = document.createElement("p");
+      franchise.innerHTML =`
+      ${gameFranchise}
+      <img id="selected-icon" src="${character.series.icon}">
+      `
+
       const otherGames = document.createElement("p");
       let otherGamesList = "Smash Titles:   ";
       character.alsoAppearsIn.forEach(title => {
         otherGamesList += title + "   ";
       })
       otherGames.textContent = otherGamesList + " Ultimate";
+      
 
       mainCharDiv.innerHTML = '';
       mainChar.innerHTML = `
       <h2>${character.name}</h2>
-      <img src="${character.images.portrait}">
+      <img id="character-portrait" src="${character.images.portrait}">
       `;
       mainChar.appendChild(otherGames);
+      mainChar.appendChild(franchise);
 
       console.log(character);
       mainCharDiv.appendChild(mainChar);
@@ -38,6 +47,8 @@ const gameButtonArray = document.querySelectorAll(".game-button");
 gameButtonArray.forEach(button => button.addEventListener("click", e => {
   const charDiv = document.querySelector("#character-div");
   charDiv.innerHTML = ``;
+  const mainCharDiv = document.querySelector("#character-selected");
+  mainCharDiv.innerHTML = ``;
 
   fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", {
   headers: {
@@ -57,6 +68,12 @@ gameButtonArray.forEach(button => button.addEventListener("click", e => {
       const mainCharDiv = document.querySelector("#character-selected");
 
       const otherGames = document.createElement("p");
+      let gameFranchise = `Game Franchise: ${character.series.name}`;
+      const franchise = document.createElement("p");
+      franchise.innerHTML =`
+      ${gameFranchise}
+      <img id="selected-icon" src="${character.series.icon}">
+      `
       let otherGamesList = "Smash Titles:   ";
       character.alsoAppearsIn.forEach(title => {
         otherGamesList += title + "   ";
@@ -66,9 +83,10 @@ gameButtonArray.forEach(button => button.addEventListener("click", e => {
       mainCharDiv.innerHTML = '';
       mainChar.innerHTML = `
       <h2>${character.name}</h2>
-      <img src="${character.images.portrait}">
+      <img id="character-portrait" src="${character.images.portrait}">
       `;
       mainChar.appendChild(otherGames);
+      mainChar.appendChild(franchise);
 
       mainCharDiv.appendChild(mainChar);
     })

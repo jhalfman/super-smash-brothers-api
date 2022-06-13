@@ -11,3 +11,7 @@ body {
  #character-div div {
   display: inline-block;
  }
+
+ #character-div div img {
+  width: 50px;
+ }

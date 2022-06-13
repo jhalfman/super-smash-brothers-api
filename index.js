@@ -13,9 +13,22 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
       const mainCharDiv = document.querySelector("#character-selected");
+
+      const otherGames = document.createElement("p");
+      let otherGamesList = "Smash Titles:   ";
+      character.alsoAppearsIn.forEach(title => {
+        otherGamesList += title + "   ";
+      })
+      otherGames.textContent = otherGamesList + " Ultimate";
+
+      mainCharDiv.innerHTML = '';
       mainChar.innerHTML = `
-      <img src="${character.images.icon}">
-      `
+      <h2>${character.name}</h2>
+      <img src="${character.images.portrait}">
+      `;
+      mainChar.appendChild(otherGames);
+
+      console.log(character);
       mainCharDiv.appendChild(mainChar);
     })
     charDiv.appendChild(newChar);

@@ -75,6 +75,7 @@ gameButtonArray.forEach(button => button.addEventListener("click", e => {
     `
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
+      e.target.style["background-color"] = "blue";
       const mainCharDiv = document.querySelector("#character-selected");
 
       const otherGames = document.createElement("p");
@@ -113,3 +114,54 @@ gameButtonArray.forEach(button => button.addEventListener("click", e => {
     }
   }))
 }))
+
+const characterForm = document.querySelector("#new-character-form");
+characterForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const newChar = document.createElement("div");
+    const charDiv = document.querySelector("#character-div");
+    newChar.innerHTML = `
+    <img data-name="${e.target.name.value}" data-franchise=${e.target.franchise.value} 
+    data-portrait=${e.target.portrait.value} src="${e.target.icon.value}">
+    
+    `
+    newChar.addEventListener("click", event => {
+      
+      const mainChar = document.createElement("div");
+      event.target.style["background-color"] = "blue";
+      const mainCharDiv = document.querySelector("#character-selected");
+
+      let gameFranchise = `Game Franchise: ${newChar.querySelector("img").getAttribute("data-franchise")}`;
+      const franchise = document.createElement("p");
+      franchise.innerHTML =`
+      ${gameFranchise}
+      <img id="selected-icon" src="" alt="IMG HERE">
+      `
+
+      
+
+      mainCharDiv.innerHTML = '';
+      mainChar.innerHTML = `
+      <h2>${newChar.querySelector("img").getAttribute("data-name")}</h2>
+      <img id="character-portrait" src="${newChar.querySelector("img").getAttribute("data-portrait")}">
+      `;
+    
+      mainChar.appendChild(franchise);
+
+
+      mainCharDiv.appendChild(mainChar);
+    })
+
+    newChar.addEventListener("mouseenter", e => {
+      e.target.style["background-color"] = "orange";
+    })
+
+    newChar.addEventListener("mouseleave", e => {
+      e.target.style["background-color"] = "white";
+    })
+
+    charDiv.appendChild(newChar);
+
+  e.target.reset();
+})

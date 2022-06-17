@@ -1,35 +1,37 @@
 /** GLOBAL CONSTANTS **/
 const URL = "https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters";
-
+let charList;
 
 /** NODE GETTERS **/
 //main char div is #character-div
-//game buttons are #button-box
-//large character #display is character-selected
 const characterDiv = () => document.getElementById("character-div");
+//game buttons are #button-box .game-button
 const buttonBoxArray = () => document.querySelectorAll(".game-button");
+//large character #display is character-selected
 const characterSelect = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
+
+
+/** EVENT LISTENERS  **/
+
+
+/** MISCELLANEOUS  **/
 const getCharacterList = () => {
-  let charList = [];
   fetch(URL, {
     headers: {
       Accept: "application/json"
     }
   })
   .then(resp => resp.json())
-  .then(data => data.forEach(character => {
-    charList.push(character);
-  }))
-  return charList;
+  .then(data => {
+    charList = data;
+  })
 }
 
-/** EVENT LISTENERS  **/
 
 
-/** MISCELLANEOUS  **/
 const fetchAndFill = () => {
 fetch(URL, {
   headers: {
@@ -88,8 +90,15 @@ fetch(URL, {
 
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", () => {
-  fetchAndFill();
+  getCharacterList();
 })
+
+
+
+
+
+
+
 
 
 

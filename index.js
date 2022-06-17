@@ -1,3 +1,29 @@
+/** GLOBAL CONSTANTS **/
+
+
+/** NODE GETTERS **/
+//main char div is #character-div
+//game buttons are #button-box
+//large character #display is character-selected
+const characterDiv = () => document.getElementById("character-div");
+const buttonBox = () => document.getElementById("button-box");
+const characterSelect = () => document.getElementById("character-selected");
+
+
+/** EVENT HANDLERS **/
+
+
+/** EVENT LISTENERS  **/
+
+
+/** MISCELLANEOUS  **/
+
+
+/**  START UP **/
+document.addEventListener("DOMContentLoaded", () => {
+  
+})
+
 fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", {
   headers: {
     Accept: "application/json"

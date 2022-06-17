@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" type="text/css" href="style.css" />
-      <script defer type="text/javascript" src="index.js">
-      </script>
+      <script defer type="text/javascript" src="index.js"></script>
       <title>SUPER SMASH BROTHERS CHARACTERS</title>
   </head>
   <body>
-      <h1>Here are some characters, I hope</h1>
+      <h1 id="main-title">SUPER SMASH BROTHERS</h1>
       <div id="character-div"></div>
       <div id="button-box">
         <button class="game-button" id="SSB">64</button>
@@ -16,7 +18,7 @@
         <button class="game-button" id="SSB4">Smash 4</button>
         <button class="game-button" id="Ultimate">Ultimate</button>
      </div>
-     <form id="new-character-form">
+     <form id="new-character-form" hidden>
       <input type="text" name="name" id="name" placeholder="name">
       <input type="text" name="franchise" id="franchise" placeholder="franchise">
       <input type="text" name="icon" id="icon" placeholder="Icon URL">

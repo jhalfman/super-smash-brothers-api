@@ -1,4 +1,5 @@
 /** GLOBAL CONSTANTS **/
+const URL = "https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters";
 
 
 /** NODE GETTERS **/
@@ -6,25 +7,31 @@
 //game buttons are #button-box
 //large character #display is character-selected
 const characterDiv = () => document.getElementById("character-div");
-const buttonBox = () => document.getElementById("button-box");
+const buttonBoxArray = () => document.querySelectorAll(".game-button");
 const characterSelect = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
-
+const getCharacterList = () => {
+  let charList = [];
+  fetch(URL, {
+    headers: {
+      Accept: "application/json"
+    }
+  })
+  .then(resp => resp.json())
+  .then(data => data.forEach(character => {
+    charList.push(character);
+  }))
+  return charList;
+}
 
 /** EVENT LISTENERS  **/
 
 
 /** MISCELLANEOUS  **/
-
-
-/**  START UP **/
-document.addEventListener("DOMContentLoaded", () => {
-  
-})
-
-fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", {
+const fetchAndFill = () => {
+fetch(URL, {
   headers: {
     Accept: "application/json"
   }
@@ -32,7 +39,6 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
 .then(resp => resp.json())
 .then(data => data.forEach(character => {
     const newChar = document.createElement("div");
-    const charDiv = document.querySelector("#character-div");
     newChar.innerHTML = `
     <img src="${character.images.icon}">
     `
@@ -76,11 +82,18 @@ fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", 
       e.target.style["background-color"] = "white";
     })
 
-    charDiv.appendChild(newChar);
+    characterDiv().appendChild(newChar);
 }))
+}
 
-const gameButtonArray = document.querySelectorAll(".game-button");
-gameButtonArray.forEach(button => button.addEventListener("click", e => {
+/**  START UP **/
+document.addEventListener("DOMContentLoaded", () => {
+  fetchAndFill();
+})
+
+
+
+buttonBoxArray().forEach(button => button.addEventListener("click", e => {
   const charDiv = document.querySelector("#character-div");
   charDiv.innerHTML = ``;
   const mainCharDiv = document.querySelector("#character-selected");

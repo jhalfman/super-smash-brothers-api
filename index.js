@@ -63,11 +63,11 @@ fetch(URL, {
     `
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
-      if (e.target.style["background-color"] !== "blue") {
-        e.target.style["background-color"] = "blue";
+      if (e.target.parentElement.style["background-color"] !== "blue") {
+        e.target.parentElement.style["background-color"] = "blue";
       }
       else {
-        e.target.style["background-color"] = "white";
+        e.target.parentElement.style["background-color"] = "white";
       }
       const mainCharDiv = document.querySelector("#character-selected");
 
@@ -99,11 +99,15 @@ fetch(URL, {
     })
 
     newChar.addEventListener("mouseenter", e => {
-      e.target.style["background-color"] = "orange";
+      if (e.target.style["background-color"] !== "blue"){
+        e.target.style["background-color"] = "orange";
+      }
     })
 
     newChar.addEventListener("mouseleave", e => {
-      e.target.style["background-color"] = "white";
+      if (e.target.style["background-color"] === "orange"){
+        e.target.style["background-color"] = "white";
+      }
     })
 
     characterDiv().appendChild(newChar);

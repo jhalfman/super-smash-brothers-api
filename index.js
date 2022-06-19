@@ -1,35 +1,54 @@
 /** GLOBAL CONSTANTS **/
 const URL = "https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters";
-
+let charList = [];
 
 /** NODE GETTERS **/
 //main char div is #character-div
-//game buttons are #button-box
-//large character #display is character-selected
 const characterDiv = () => document.getElementById("character-div");
+//game buttons are #button-box .game-button
 const buttonBoxArray = () => document.querySelectorAll(".game-button");
+//large character #display is character-selected
 const characterSelect = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
+const createCharacterIcon = () => {
+
+}
+
+const createCharacterPortrait = () => {
+
+}
+
+const filterByGame = () => {
+
+}
+
+/** EVENT LISTENERS  **/
+const selectCharacter = () => {
+  
+}
+
+const selectGameButton = () => {
+
+}
+
+/** MISCELLANEOUS  **/
+//Fetches data to save in global variable charList
 const getCharacterList = () => {
-  let charList = [];
   fetch(URL, {
     headers: {
       Accept: "application/json"
     }
   })
   .then(resp => resp.json())
-  .then(data => data.forEach(character => {
-    charList.push(character);
-  }))
-  return charList;
+  .then(data => {
+    charList = data;
+  })
 }
 
-/** EVENT LISTENERS  **/
 
 
-/** MISCELLANEOUS  **/
 const fetchAndFill = () => {
 fetch(URL, {
   headers: {
@@ -44,7 +63,12 @@ fetch(URL, {
     `
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
-      e.target.style["background-color"] = "blue";
+      if (e.target.style["background-color"] !== "blue") {
+        e.target.style["background-color"] = "blue";
+      }
+      else {
+        e.target.style["background-color"] = "white";
+      }
       const mainCharDiv = document.querySelector("#character-selected");
 
       let gameFranchise = `Game Franchise: ${character.series.name}`;
@@ -88,8 +112,16 @@ fetch(URL, {
 
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", () => {
+  getCharacterList();
   fetchAndFill();
 })
+
+
+
+
+
+
+
 
 
 
@@ -99,7 +131,7 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
   const mainCharDiv = document.querySelector("#character-selected");
   mainCharDiv.innerHTML = ``;
 
-  fetch("https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters", {
+  fetch(URL, {
   headers: {
     Accept: "application/json"
   }
@@ -114,7 +146,13 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
     `
     newChar.addEventListener("click", e => {
       const mainChar = document.createElement("div");
-      e.target.style["background-color"] = "blue";
+      if (e.target.style["background-color"] !== "blue") {
+        e.target.style["background-color"] = "blue";
+      }
+      else {
+        e.target.style["background-color"] = "white";
+      }
+      
       const mainCharDiv = document.querySelector("#character-selected");
 
       const otherGames = document.createElement("p");

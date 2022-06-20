@@ -27,12 +27,39 @@ const createCharacterIcon = (character) => {
   newChar.innerHTML = `
   <img src="${character.images.icon}">
   `
-  newChar.addEventListener("mouseenter", MouseEnterHighlight);
+  mouseEnterHighlight(newChar);
+  mouseLeaveHighlight(newChar);
+  
+  createCharacterPortrait(newChar, character);
+  
+  
+  characterDiv().appendChild(newChar);
+}
 
-  newChar.addEventListener("mouseleave", MouseLeaveHighlight);
 
+
+const filterByGame = () => {
+
+}
+
+/** EVENT LISTENERS  **/
+const mouseEnterHighlight = (element) => {
+  element.addEventListener("mouseenter", e => {
+    if (e.target.style["background-color"] !== "blue"){
+      e.target.style["background-color"] = "orange";
+    }
+  })
+}
+const mouseLeaveHighlight = (element) => {
+  element.addEventListener("mouseleave", e => {
+    if (e.target.style["background-color"] === "orange"){
+      e.target.style["background-color"] = "white";
+    }
+  })
+}
+
+const createCharacterPortrait = (newChar, character) => {
   newChar.addEventListener("click", e => {
-    const selectedChar = document.createElement("div");
     
     if (newChar.style["background-color"] !== "blue") {
       newChar.style["background-color"] = "blue";;
@@ -41,62 +68,38 @@ const createCharacterIcon = (character) => {
       newChar.style["background-color"] = "white";
     }
 
+    
     const characterSelectedDiv = document.querySelector("#character-selected");
 
-    let gameFranchise = `Game Franchise: ${character.series.name}`;
-    const franchise = document.createElement("p");
-    franchise.innerHTML =`
-    ${gameFranchise}
-    <img id="selected-icon" src="${character.series.icon}">
-    `
-
-    const otherGames = document.createElement("p");
-    let otherGamesList = "Smash Titles:   ";
-    character.alsoAppearsIn.forEach(title => {
-      otherGamesList += title + "   ";
-    })
-    otherGames.textContent = otherGamesList + " Ultimate";
-    
+    createPortraitInfo(character);
 
     characterSelectedDiv.innerHTML = '';
+    characterSelectedDiv.appendChild(createPortraitInfo(character));
+   
+  })
+}
+
+const createPortraitInfo = (character) => {
+  const selectedChar = document.createElement("div");
+
+  let otherGamesList = "Smash Titles:   ";
+    if (character.alsoAppearsIn === []) {
+      otherGamesList = "Smash Titles: "
+    }
+    else {
+      character.alsoAppearsIn.forEach(title => {
+        otherGamesList += title + " - ";
+      })
+    }
+
     selectedChar.innerHTML = `
     <h2>${character.name}</h2>
     <img id="character-portrait" src="${character.images.portrait}">
+    <p>${otherGamesList} Ultimate <br>
+    Game Franchise: ${character.series.name}</p>
+    <img id="selected-icon" src="${character.series.icon}">
     `;
-    selectedChar.appendChild(otherGames);
-    selectedChar.appendChild(franchise);
-
-    characterSelectedDiv.appendChild(selectedChar);
-  })
-
-    
-  
-  characterDiv().appendChild(newChar);
-}
-
-const createCharacterPortrait = () => {
-
-}
-
-const filterByGame = () => {
-
-}
-
-/** EVENT LISTENERS  **/
-const MouseEnterHighlight = (e) => {
-  if (e.target.style["background-color"] !== "blue"){
-    e.target.style["background-color"] = "orange";
-  }
-}
-
-const MouseLeaveHighlight = (e) => {
-  if (e.target.style["background-color"] === "orange"){
-    e.target.style["background-color"] = "white";
-  }
-}
-
-const selectCharacter = (e, character) => {
-  
+    return selectedChar;
 }
 
 const selectGameButton = () => {

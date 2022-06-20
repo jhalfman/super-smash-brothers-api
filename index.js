@@ -11,11 +11,14 @@ const buttonBoxArray = () => document.querySelectorAll(".game-button"); //game b
 
 const characterSelectedDiv = () => document.getElementById("character-selected"); //large character #display is character-selected
 
+const searchCharacterForm = () => document.getElementById("search-character-form"); //form is #search-character-form
 
+const refreshButton = () => document.getElementById("refresh"); //#refresh
 /** EVENT HANDLERS **/
 
 //iterates through character list to popular div with character icons
 const fillCharacterScreen = () => {
+  characterDiv().innerHTML = '';
   charList.forEach(character => {
     createCharacterIcon(character);    
 })
@@ -86,6 +89,28 @@ const createButtonEvent = (e) => {
   })
 }
 
+const createSearchFormEvent = (e) => {
+ e.preventDefault();
+  let searchCharacter;
+  charList.forEach(character => {
+   if (e.target["search-character"].value.toLowerCase() === character.name.toLowerCase()) {
+    searchCharacter = character;
+    }
+  })
+  
+  if(searchCharacter) {
+    characterDiv().innerHTML = '';
+    characterSelectedDiv().innerHTML = '';
+    createCharacterIcon(searchCharacter);
+    characterSelectedDiv().appendChild(createPortraitInfo(searchCharacter))
+  }
+  else {
+    alert(`No smash character named "${e.target["search-character"].value}"`)
+  }
+    
+  e.target.reset();
+}
+
 const createCharacterPortrait = (newChar, character) => {
   newChar.addEventListener("click", e => {    
     if (newChar.style["background-color"] !== "blue") {
@@ -97,9 +122,10 @@ const createCharacterPortrait = (newChar, character) => {
 
     characterSelectedDiv().innerHTML = '';
     characterSelectedDiv().appendChild(createPortraitInfo(character));
-   
   })
 }
+
+
 
 /** MISCELLANEOUS  **/
 //Fetches data to save in global variable charList
@@ -113,8 +139,6 @@ const getCharacterList = async () => {
   .then(data => charList = data)
 }
 
-
-
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", () => {
   getCharacterList();  
@@ -122,6 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fillCharacterScreen();
   }, 500);
   buttonBoxArray().forEach(button => button.addEventListener("click", createButtonEvent))
+  searchCharacterForm().addEventListener("submit", createSearchFormEvent)
+  refreshButton().addEventListener("click", fillCharacterScreen);
 })
 
 

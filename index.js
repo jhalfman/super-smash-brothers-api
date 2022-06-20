@@ -1,6 +1,8 @@
 /** GLOBAL CONSTANTS **/
 const URL = "https://smashbros-unofficial-api.vercel.app/api/v1/ultimate/characters";
+
 let charList = [];
+
 
 /** NODE GETTERS **/
 //main char div is #character-div
@@ -12,91 +14,52 @@ const characterSelect = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
-const createCharacterIcon = () => {
-
-}
-
-const createCharacterPortrait = () => {
-
-}
-
-const filterByGame = () => {
-
-}
-
-/** EVENT LISTENERS  **/
-const selectCharacter = () => {
-  
-}
-
-const selectGameButton = () => {
-
-}
-
-/** MISCELLANEOUS  **/
-//Fetches data to save in global variable charList
-const getCharacterList = () => {
-  fetch(URL, {
-    headers: {
-      Accept: "application/json"
-    }
-  })
-  .then(resp => resp.json())
-  .then(data => {
-    charList = data;
-  })
-}
-
-
-
-const fetchAndFill = () => {
-fetch(URL, {
-  headers: {
-    Accept: "application/json"
-  }
+const fillCharacterScreen = () => {
+  charList.forEach(character => {
+    createCharacterIcon(character);    
 })
-.then(resp => resp.json())
-.then(data => data.forEach(character => {
-    const newChar = document.createElement("div");
-    newChar.innerHTML = `
-    <img src="${character.images.icon}">
+}
+
+const createCharacterIcon = (character) => {
+  const newChar = document.createElement("div");
+  newChar.innerHTML = `
+  <img src="${character.images.icon}">
+  `
+  newChar.addEventListener("click", e => {
+    const mainChar = document.createElement("div");
+    if (e.target.parentElement.style["background-color"] !== "blue") {
+      e.target.parentElement.style["background-color"] = "blue";
+    }
+    else {
+      e.target.parentElement.style["background-color"] = "white";
+    }
+    const mainCharDiv = document.querySelector("#character-selected");
+
+    let gameFranchise = `Game Franchise: ${character.series.name}`;
+    const franchise = document.createElement("p");
+    franchise.innerHTML =`
+    ${gameFranchise}
+    <img id="selected-icon" src="${character.series.icon}">
     `
-    newChar.addEventListener("click", e => {
-      const mainChar = document.createElement("div");
-      if (e.target.parentElement.style["background-color"] !== "blue") {
-        e.target.parentElement.style["background-color"] = "blue";
-      }
-      else {
-        e.target.parentElement.style["background-color"] = "white";
-      }
-      const mainCharDiv = document.querySelector("#character-selected");
 
-      let gameFranchise = `Game Franchise: ${character.series.name}`;
-      const franchise = document.createElement("p");
-      franchise.innerHTML =`
-      ${gameFranchise}
-      <img id="selected-icon" src="${character.series.icon}">
-      `
-
-      const otherGames = document.createElement("p");
-      let otherGamesList = "Smash Titles:   ";
-      character.alsoAppearsIn.forEach(title => {
-        otherGamesList += title + "   ";
-      })
-      otherGames.textContent = otherGamesList + " Ultimate";
-      
-
-      mainCharDiv.innerHTML = '';
-      mainChar.innerHTML = `
-      <h2>${character.name}</h2>
-      <img id="character-portrait" src="${character.images.portrait}">
-      `;
-      mainChar.appendChild(otherGames);
-      mainChar.appendChild(franchise);
-
-      console.log(character);
-      mainCharDiv.appendChild(mainChar);
+    const otherGames = document.createElement("p");
+    let otherGamesList = "Smash Titles:   ";
+    character.alsoAppearsIn.forEach(title => {
+      otherGamesList += title + "   ";
     })
+    otherGames.textContent = otherGamesList + " Ultimate";
+    
+
+    mainCharDiv.innerHTML = '';
+    mainChar.innerHTML = `
+    <h2>${character.name}</h2>
+    <img id="character-portrait" src="${character.images.portrait}">
+    `;
+    mainChar.appendChild(otherGames);
+    mainChar.appendChild(franchise);
+
+    mainCharDiv.appendChild(mainChar);
+  })
 
     newChar.addEventListener("mouseenter", e => {
       if (e.target.style["background-color"] !== "blue"){
@@ -109,22 +72,51 @@ fetch(URL, {
         e.target.style["background-color"] = "white";
       }
     })
-
-    characterDiv().appendChild(newChar);
-}))
+  
+  characterDiv().appendChild(newChar);
 }
+
+const createCharacterPortrait = () => {
+
+}
+
+const filterByGame = () => {
+
+}
+
+/** EVENT LISTENERS  **/
+const selectCharacter = (e, character) => {
+  
+}
+
+const selectGameButton = () => {
+
+}
+
+
+
+/** MISCELLANEOUS  **/
+//Fetches data to save in global variable charList
+const getCharacterList = async () => {
+  fetch(URL, {
+    headers: {
+      Accept: "application/json"
+    }
+  })
+  .then(resp => resp.json())
+  .then(data => charList = data)
+}
+
+
 
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", () => {
-  getCharacterList();
-  fetchAndFill();
+  getCharacterList();  
+  setTimeout(() => {
+    fillCharacterScreen();
+  }, 200);
+  
 })
-
-
-
-
-
-
 
 
 

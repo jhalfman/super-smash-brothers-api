@@ -5,12 +5,11 @@ let charList = [];
 
 
 /** NODE GETTERS **/
-//main char div is #character-div
-const characterDiv = () => document.getElementById("character-div");
-//game buttons are #button-box .game-button
-const buttonBoxArray = () => document.querySelectorAll(".game-button");
-//large character #display is character-selected
-const characterSelectedDiv = () => document.getElementById("character-selected");
+const characterDiv = () => document.getElementById("character-div"); //main char div is #character-div
+
+const buttonBoxArray = () => document.querySelectorAll(".game-button"); //game buttons are #button-box .game-button
+
+const characterSelectedDiv = () => document.getElementById("character-selected"); //large character #display is character-selected
 
 
 /** EVENT HANDLERS **/
@@ -22,6 +21,7 @@ const fillCharacterScreen = () => {
 })
 }
 
+//create div for icon img, calls icon event listener functions, appends to DOM
 const createCharacterIcon = (character) => {
   const newChar = document.createElement("div");
   newChar.innerHTML = `
@@ -33,57 +33,6 @@ const createCharacterIcon = (character) => {
   createCharacterPortrait(newChar, character);
   
   characterDiv().appendChild(newChar);
-}
-
-
-
-const filterByGame = () => {
-
-}
-
-/** EVENT LISTENERS  **/
-const mouseEnterHighlight = (element) => {
-  element.addEventListener("mouseenter", e => {
-    if (e.target.style["background-color"] !== "blue"){
-      e.target.style["background-color"] = "orange";
-    }
-  })
-}
-const mouseLeaveHighlight = (element) => {
-  element.addEventListener("mouseleave", e => {
-    if (e.target.style["background-color"] === "orange"){
-      e.target.style["background-color"] = "white";
-    }
-  })
-}
-
-const createCharacterPortrait = (newChar, character) => {
-  newChar.addEventListener("click", e => {
-    
-    if (newChar.style["background-color"] !== "blue") {
-      newChar.style["background-color"] = "blue";;
-    }
-    else {
-      newChar.style["background-color"] = "white";
-    }
-
-    createPortraitInfo(character);
-
-    characterSelectedDiv().innerHTML = '';
-    characterSelectedDiv().appendChild(createPortraitInfo(character));
-   
-  })
-}
-
-const createButtonEvent = (e) => {
-  characterDiv().innerHTML = ``;
-  characterSelectedDiv().innerHTML = ``;
-
-  charList.forEach(character => {    
-    if (character.alsoAppearsIn.includes(e.target.id) || e.target.id === "Ultimate") {
-      createCharacterIcon(character);
-    }
-  })
 }
 
 const createPortraitInfo = (character) => {
@@ -109,11 +58,48 @@ const createPortraitInfo = (character) => {
     return selectedChar;
 }
 
-const selectGameButton = () => {
-
+/** EVENT LISTENERS  **/
+const mouseEnterHighlight = (element) => {
+  element.addEventListener("mouseenter", e => {
+    if (e.target.style["background-color"] !== "blue"){
+      e.target.style["background-color"] = "orange";
+    }
+  })
 }
 
+const mouseLeaveHighlight = (element) => {
+  element.addEventListener("mouseleave", e => {
+    if (e.target.style["background-color"] === "orange"){
+      e.target.style["background-color"] = "white";
+    }
+  })
+}
 
+const createButtonEvent = (e) => {
+  characterDiv().innerHTML = ``;
+  characterSelectedDiv().innerHTML = ``;
+
+  charList.forEach(character => {    
+    if (character.alsoAppearsIn.includes(e.target.id) || e.target.id === "Ultimate") {
+      createCharacterIcon(character);
+    }
+  })
+}
+
+const createCharacterPortrait = (newChar, character) => {
+  newChar.addEventListener("click", e => {    
+    if (newChar.style["background-color"] !== "blue") {
+      newChar.style["background-color"] = "blue";;
+    }
+    else {
+      newChar.style["background-color"] = "white";
+    }
+
+    characterSelectedDiv().innerHTML = '';
+    characterSelectedDiv().appendChild(createPortraitInfo(character));
+   
+  })
+}
 
 /** MISCELLANEOUS  **/
 //Fetches data to save in global variable charList

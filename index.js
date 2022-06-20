@@ -19,6 +19,7 @@ const refreshButton = () => document.getElementById("refresh"); //#refresh
 //iterates through character list to popular div with character icons
 const fillCharacterScreen = () => {
   characterDiv().innerHTML = '';
+  characterSelectedDiv().innerHTML = '';
   charList.forEach(character => {
     createCharacterIcon(character);    
 })

@@ -130,7 +130,7 @@ const createCharacterPortrait = (newChar, character) => {
 /** MISCELLANEOUS  **/
 //Fetches data to save in global variable charList
 const getCharacterList = async () => {
-  fetch(URL, {
+  await fetch(URL, {
     headers: {
       Accept: "application/json"
     }
@@ -140,11 +140,10 @@ const getCharacterList = async () => {
 }
 
 /**  START UP **/
-document.addEventListener("DOMContentLoaded", () => {
-  getCharacterList();  
-  setTimeout(() => {
-    fillCharacterScreen();
-  }, 500);
+document.addEventListener("DOMContentLoaded", async () => {
+  await getCharacterList();  
+  fillCharacterScreen();
+  
   buttonBoxArray().forEach(button => button.addEventListener("click", createButtonEvent))
   searchCharacterForm().addEventListener("submit", createSearchFormEvent)
   refreshButton().addEventListener("click", fillCharacterScreen);

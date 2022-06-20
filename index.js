@@ -14,6 +14,8 @@ const characterSelect = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
+
+//iterates through character list to popular div with character icons
 const fillCharacterScreen = () => {
   charList.forEach(character => {
     createCharacterIcon(character);    
@@ -25,15 +27,21 @@ const createCharacterIcon = (character) => {
   newChar.innerHTML = `
   <img src="${character.images.icon}">
   `
+  newChar.addEventListener("mouseenter", MouseEnterHighlight);
+
+  newChar.addEventListener("mouseleave", MouseLeaveHighlight);
+
   newChar.addEventListener("click", e => {
-    const mainChar = document.createElement("div");
-    if (e.target.parentElement.style["background-color"] !== "blue") {
-      e.target.parentElement.style["background-color"] = "blue";
+    const selectedChar = document.createElement("div");
+    
+    if (newChar.style["background-color"] !== "blue") {
+      newChar.style["background-color"] = "blue";;
     }
     else {
-      e.target.parentElement.style["background-color"] = "white";
+      newChar.style["background-color"] = "white";
     }
-    const mainCharDiv = document.querySelector("#character-selected");
+
+    const characterSelectedDiv = document.querySelector("#character-selected");
 
     let gameFranchise = `Game Franchise: ${character.series.name}`;
     const franchise = document.createElement("p");
@@ -50,28 +58,18 @@ const createCharacterIcon = (character) => {
     otherGames.textContent = otherGamesList + " Ultimate";
     
 
-    mainCharDiv.innerHTML = '';
-    mainChar.innerHTML = `
+    characterSelectedDiv.innerHTML = '';
+    selectedChar.innerHTML = `
     <h2>${character.name}</h2>
     <img id="character-portrait" src="${character.images.portrait}">
     `;
-    mainChar.appendChild(otherGames);
-    mainChar.appendChild(franchise);
+    selectedChar.appendChild(otherGames);
+    selectedChar.appendChild(franchise);
 
-    mainCharDiv.appendChild(mainChar);
+    characterSelectedDiv.appendChild(selectedChar);
   })
 
-    newChar.addEventListener("mouseenter", e => {
-      if (e.target.style["background-color"] !== "blue"){
-        e.target.style["background-color"] = "orange";
-      }
-    })
-
-    newChar.addEventListener("mouseleave", e => {
-      if (e.target.style["background-color"] === "orange"){
-        e.target.style["background-color"] = "white";
-      }
-    })
+    
   
   characterDiv().appendChild(newChar);
 }
@@ -85,6 +83,18 @@ const filterByGame = () => {
 }
 
 /** EVENT LISTENERS  **/
+const MouseEnterHighlight = (e) => {
+  if (e.target.style["background-color"] !== "blue"){
+    e.target.style["background-color"] = "orange";
+  }
+}
+
+const MouseLeaveHighlight = (e) => {
+  if (e.target.style["background-color"] === "orange"){
+    e.target.style["background-color"] = "white";
+  }
+}
+
 const selectCharacter = (e, character) => {
   
 }
@@ -114,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getCharacterList();  
   setTimeout(() => {
     fillCharacterScreen();
-  }, 200);
+  }, 500);
   
 })
 

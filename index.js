@@ -10,7 +10,7 @@ const characterDiv = () => document.getElementById("character-div");
 //game buttons are #button-box .game-button
 const buttonBoxArray = () => document.querySelectorAll(".game-button");
 //large character #display is character-selected
-const characterSelect = () => document.getElementById("character-selected");
+const characterSelectedDiv = () => document.getElementById("character-selected");
 
 
 /** EVENT HANDLERS **/
@@ -31,7 +31,6 @@ const createCharacterIcon = (character) => {
   mouseLeaveHighlight(newChar);
   
   createCharacterPortrait(newChar, character);
-  
   
   characterDiv().appendChild(newChar);
 }
@@ -68,13 +67,10 @@ const createCharacterPortrait = (newChar, character) => {
       newChar.style["background-color"] = "white";
     }
 
-    
-    const characterSelectedDiv = document.querySelector("#character-selected");
-
     createPortraitInfo(character);
 
-    characterSelectedDiv.innerHTML = '';
-    characterSelectedDiv.appendChild(createPortraitInfo(character));
+    characterSelectedDiv().innerHTML = '';
+    characterSelectedDiv().appendChild(createPortraitInfo(character));
    
   })
 }
@@ -135,18 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 buttonBoxArray().forEach(button => button.addEventListener("click", e => {
-  const charDiv = document.querySelector("#character-div");
-  charDiv.innerHTML = ``;
-  const mainCharDiv = document.querySelector("#character-selected");
-  mainCharDiv.innerHTML = ``;
-
-  fetch(URL, {
-  headers: {
-    Accept: "application/json"
-  }
-})
-  .then(resp=>resp.json())
-  .then(data => data.forEach(character => {
+  characterDiv().innerHTML = ``;
+  
+  characterSelectedDiv().innerHTML = ``;
+  charList.forEach(character => {
     
     if (character.alsoAppearsIn.includes(e.target.id) || e.target.id === "Ultimate") {
       const newChar = document.createElement("div");
@@ -162,8 +150,6 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
         e.target.style["background-color"] = "white";
       }
       
-      const mainCharDiv = document.querySelector("#character-selected");
-
       const otherGames = document.createElement("p");
       let gameFranchise = `Game Franchise: ${character.series.name}`;
       const franchise = document.createElement("p");
@@ -177,7 +163,7 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
       })
       otherGames.textContent = otherGamesList + " Ultimate";
 
-      mainCharDiv.innerHTML = '';
+      characterSelectedDiv().innerHTML = '';
       mainChar.innerHTML = `
       <h2>${character.name}</h2>
       <img id="character-portrait" src="${character.images.portrait}">
@@ -185,7 +171,7 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
       mainChar.appendChild(otherGames);
       mainChar.appendChild(franchise);
 
-      mainCharDiv.appendChild(mainChar);
+      characterSelectedDiv().appendChild(mainChar);
     })
 
     newChar.addEventListener("mouseenter", e => {
@@ -196,11 +182,15 @@ buttonBoxArray().forEach(button => button.addEventListener("click", e => {
       e.target.style["background-color"] = "white";
     })
 
-    charDiv.appendChild(newChar);
+    characterDiv().appendChild(newChar);
     }
-  }))
+  })
 }))
 
+
+
+
+/*
 const characterForm = document.querySelector("#new-character-form");
 characterForm.addEventListener("submit", e => {
   e.preventDefault();
@@ -251,3 +241,4 @@ characterForm.addEventListener("submit", e => {
 
   e.target.reset();
 })
+*/

@@ -75,6 +75,17 @@ const createCharacterPortrait = (newChar, character) => {
   })
 }
 
+const createButtonEvent = (e) => {
+  characterDiv().innerHTML = ``;
+  characterSelectedDiv().innerHTML = ``;
+
+  charList.forEach(character => {    
+    if (character.alsoAppearsIn.includes(e.target.id) || e.target.id === "Ultimate") {
+      createCharacterIcon(character);
+    }
+  })
+}
+
 const createPortraitInfo = (character) => {
   const selectedChar = document.createElement("div");
 
@@ -124,68 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     fillCharacterScreen();
   }, 500);
-  
+  buttonBoxArray().forEach(button => button.addEventListener("click", createButtonEvent))
 })
 
 
 
 
-buttonBoxArray().forEach(button => button.addEventListener("click", e => {
-  characterDiv().innerHTML = ``;
-  
-  characterSelectedDiv().innerHTML = ``;
-  charList.forEach(character => {
-    
-    if (character.alsoAppearsIn.includes(e.target.id) || e.target.id === "Ultimate") {
-      const newChar = document.createElement("div");
-      newChar.innerHTML = `
-    <img src="${character.images.icon}">
-    `
-    newChar.addEventListener("click", e => {
-      const mainChar = document.createElement("div");
-      if (e.target.style["background-color"] !== "blue") {
-        e.target.style["background-color"] = "blue";
-      }
-      else {
-        e.target.style["background-color"] = "white";
-      }
-      
-      const otherGames = document.createElement("p");
-      let gameFranchise = `Game Franchise: ${character.series.name}`;
-      const franchise = document.createElement("p");
-      franchise.innerHTML =`
-      ${gameFranchise}
-      <img id="selected-icon" src="${character.series.icon}">
-      `
-      let otherGamesList = "Smash Titles:   ";
-      character.alsoAppearsIn.forEach(title => {
-        otherGamesList += title + "   ";
-      })
-      otherGames.textContent = otherGamesList + " Ultimate";
 
-      characterSelectedDiv().innerHTML = '';
-      mainChar.innerHTML = `
-      <h2>${character.name}</h2>
-      <img id="character-portrait" src="${character.images.portrait}">
-      `;
-      mainChar.appendChild(otherGames);
-      mainChar.appendChild(franchise);
-
-      characterSelectedDiv().appendChild(mainChar);
-    })
-
-    newChar.addEventListener("mouseenter", e => {
-      e.target.style["background-color"] = "orange";
-    })
-
-    newChar.addEventListener("mouseleave", e => {
-      e.target.style["background-color"] = "white";
-    })
-
-    characterDiv().appendChild(newChar);
-    }
-  })
-}))
 
 
 

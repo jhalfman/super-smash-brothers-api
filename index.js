@@ -172,12 +172,7 @@ function createMainPage() {
   const characterSelected = document.createElement("div");
   characterSelected.id = "character-selected";
 
-  mainBody().appendChild(titleHeader);
-  mainBody().appendChild(characterDiv);
-  mainBody().appendChild(buttonBox);
-  mainBody().appendChild(searchForm);
-  mainBody().appendChild(refreshButton);
-  mainBody().appendChild(characterSelected);
+  mainBody().append(titleHeader, characterDiv, buttonBox, searchForm, refreshButton, characterSelected);
 }
 
 //creating input fields and appending to form element

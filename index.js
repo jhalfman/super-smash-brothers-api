@@ -39,6 +39,7 @@ const createCharacterIcon = (character) => {
   characterDiv().appendChild(newChar);
 }
 
+//create portrait div with character info to be appended to DOM
 const createPortraitInfo = (character) => {
   const selectedChar = document.createElement("div");
 
@@ -62,23 +63,7 @@ const createPortraitInfo = (character) => {
     return selectedChar;
 }
 
-/** EVENT LISTENERS  **/
-const mouseEnterHighlight = (element) => {
-  element.addEventListener("mouseenter", e => {
-    if (e.target.style["background-color"] !== "blue"){
-      e.target.style["background-color"] = "orange";
-    }
-  })
-}
-
-const mouseLeaveHighlight = (element) => {
-  element.addEventListener("mouseleave", e => {
-    if (e.target.style["background-color"] === "orange"){
-      e.target.style["background-color"] = "white";
-    }
-  })
-}
-
+//callback function for when a button is clicked
 const createButtonEvent = (e) => {
   characterDiv().innerHTML = ``;
   characterSelectedDiv().innerHTML = ``;
@@ -90,6 +75,7 @@ const createButtonEvent = (e) => {
   })
 }
 
+//callback function for when the search form is submitted
 const createSearchFormEvent = (e) => {
  e.preventDefault();
   let searchCharacter;
@@ -112,6 +98,26 @@ const createSearchFormEvent = (e) => {
   e.target.reset();
 }
 
+/** EVENT LISTENERS  **/
+//highlight when mouse over icon
+const mouseEnterHighlight = (element) => {
+  element.addEventListener("mouseenter", e => {
+    if (e.target.style["background-color"] !== "blue"){
+      e.target.style["background-color"] = "orange";
+    }
+  })
+}
+
+//remove highlight when mouse leaves icon
+const mouseLeaveHighlight = (element) => {
+  element.addEventListener("mouseleave", e => {
+    if (e.target.style["background-color"] === "orange"){
+      e.target.style["background-color"] = "white";
+    }
+  })
+}
+
+//click events for icon; highlight + portrait creation
 const createCharacterPortrait = (newChar, character) => {
   newChar.addEventListener("click", e => {    
     if (newChar.style["background-color"] !== "blue") {

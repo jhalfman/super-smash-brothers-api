@@ -152,59 +152,53 @@ const createCharacterPortrait = (newChar, character) => {
 
 //create main DOM structure
 function createMainPage() {
-  titleHeader = document.createElement("h1");
+  const titleHeader = document.createElement("h1");
   titleHeader.id = "main-title";
   titleHeader.textContent = "SUPER SMASH BROTHERS";
 
-  characterDiv = document.createElement("div");
+  const characterDiv = document.createElement("div");
   characterDiv.id = "character-div";
 
-  buttonBox = document.createElement("div");
+  const buttonBox = document.createElement("div");
   buttonBox.id = "button-box";
 
-  searchForm = document.createElement("form");
+  const searchForm = document.createElement("form");
   searchForm.id = "search-character-form";
 
-  refreshButton = document.createElement("button");
+  const refreshButton = document.createElement("button");
   refreshButton.id = "refresh";
   refreshButton.textContent = "Reload Characters";
 
-  characterSelected = document.createElement("div");
+  const characterSelected = document.createElement("div");
   characterSelected.id = "character-selected";
+
+  mainBody().appendChild(titleHeader);
+  mainBody().appendChild(characterDiv);
+  mainBody().appendChild(buttonBox);
+  mainBody().appendChild(searchForm);
+  mainBody().appendChild(refreshButton);
+  mainBody().appendChild(characterSelected);
 }
 
 //creating input fields and appending to form element
 function createSearchInput() {
-  searchField = document.createElement("input");
+  const searchField = document.createElement("input");
   searchField.id = "search-character";
   searchField.setAttribute("type", "text");
   searchField.setAttribute("placeholder", "Search for a Character");
   
-  searchButton = document.createElement("input");
+  const searchButton = document.createElement("input");
   searchButton.id = "search-submit";
   searchButton.setAttribute("type", "submit");
   searchButton.setAttribute("name", "Search for a Character");
 
   searchCharacterForm().appendChild(searchField);
   searchCharacterForm().appendChild(searchButton);
-
 }
-
-{/* <h1 id="main-title">SUPER SMASH BROTHERS</h1>
-<div id="character-div"></div>
-<div id="button-box"></div>
-<form id="search-character-form">
-<input type="text" placeholder="Search for a Character" id="search-character">
-<input type="submit" name="submit" id="search-submit">
-</form>
-<button id="refresh">
-Reload Characters
-</button>
-<div id="character-selected"></div> */}
 
 //create Game buttons and append to DOM
 function createButtons() {
-  gameList = ["SSB", "Melee", "Brawl", "SSB4", "Ultimate"];
+  const gameList = ["SSB", "Melee", "Brawl", "SSB4", "Ultimate"];
   gameList.forEach(game => {
     const gameButton = document.createElement("button");
     gameButton.className = "game-button";
@@ -216,8 +210,11 @@ function createButtons() {
 
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", async () => {
-  await getCharacterList();  
+  createMainPage();
+  createSearchInput();
   createButtons();
+
+  await getCharacterList();
   fillCharacterScreen();
   
   buttonBoxArray().forEach(button => button.addEventListener("click", createButtonEvent))
@@ -232,7 +229,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-
+/* <form id="new-character-form" hidden>
+<input type="text" name="name" id="name" placeholder="name">
+<input type="text" name="franchise" id="franchise" placeholder="franchise">
+<input type="text" name="icon" id="icon" placeholder="Icon URL">
+<input type="text" name="portrait" id="portrait" placeholder="portrait URL">
+<input type="submit" name="submit" id="submit">
+</form> --> */ 
 /*
 const characterForm = document.querySelector("#new-character-form");
 characterForm.addEventListener("submit", e => {

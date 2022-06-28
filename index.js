@@ -173,15 +173,22 @@ function createMainPage() {
   characterSelected.id = "character-selected";
 }
 
-searchField = document.createElement("input");
-searchField.id = "search-character";
-searchField.setAttribute("type", "text");
-searchField.setAttribute("placeholder", "Search for a Character");
+//creating input fields and appending to form element
+function createSearchInput() {
+  searchField = document.createElement("input");
+  searchField.id = "search-character";
+  searchField.setAttribute("type", "text");
+  searchField.setAttribute("placeholder", "Search for a Character");
+  
+  searchButton = document.createElement("input");
+  searchButton.id = "search-submit";
+  searchButton.setAttribute("type", "submit");
+  searchButton.setAttribute("name", "Search for a Character");
 
-searchButton = document.createElement("input");
-searchButton.id = "search-submit";
-searchField.setAttribute("type", "submit");
-searchField.setAttribute("name", "Search for a Character");
+  searchCharacterForm().appendChild(searchField);
+  searchCharacterForm().appendChild(searchButton);
+
+}
 
 {/* <h1 id="main-title">SUPER SMASH BROTHERS</h1>
 <div id="character-div"></div>

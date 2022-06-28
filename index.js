@@ -5,6 +5,8 @@ let charList = [];
 
 
 /** NODE GETTERS **/
+const mainBody = () => document.getElementById("main"); //main body
+
 const characterDiv = () => document.getElementById("character-div"); //main char div is #character-div
 
 const buttonBoxArray = () => document.querySelectorAll(".game-button"); //game buttons are #button-box .game-button
@@ -14,7 +16,18 @@ const characterSelectedDiv = () => document.getElementById("character-selected")
 const searchCharacterForm = () => document.getElementById("search-character-form"); //form is #search-character-form
 
 const refreshButton = () => document.getElementById("refresh"); //#refresh
+
 /** EVENT HANDLERS **/
+//Fetches data to save in global variable charList
+const getCharacterList = async () => {
+  await fetch(URL, {
+    headers: {
+      Accept: "application/json"
+    }
+  })
+  .then(resp => resp.json())
+  .then(data => charList = data)
+}
 
 //iterates through character list to popular div with character icons
 const fillCharacterScreen = () => {
@@ -134,21 +147,70 @@ const createCharacterPortrait = (newChar, character) => {
 
 
 
-/** MISCELLANEOUS  **/
-//Fetches data to save in global variable charList
-const getCharacterList = async () => {
-  await fetch(URL, {
-    headers: {
-      Accept: "application/json"
-    }
-  })
-  .then(resp => resp.json())
-  .then(data => charList = data)
+/** HOMEPAGE CREATION **/
+
+
+//create main DOM structure
+function createMainPage() {
+  titleHeader = document.createElement("h1");
+  titleHeader.id = "main-title";
+  titleHeader.textContent = "SUPER SMASH BROTHERS";
+
+  characterDiv = document.createElement("div");
+  characterDiv.id = "character-div";
+
+  buttonBox = document.createElement("div");
+  buttonBox.id = "button-box";
+
+  searchForm = document.createElement("form");
+  searchForm.id = "search-character-form";
+
+  refreshButton = document.createElement("button");
+  refreshButton.id = "refresh";
+  refreshButton.textContent = "Reload Characters";
+
+  characterSelected = document.createElement("div");
+  characterSelected.id = "character-selected";
+}
+
+searchField = document.createElement("input");
+searchField.id = "search-character";
+searchField.setAttribute("type", "text");
+searchField.setAttribute("placeholder", "Search for a Character");
+
+searchButton = document.createElement("input");
+searchButton.id = "search-submit";
+searchField.setAttribute("type", "submit");
+searchField.setAttribute("name", "Search for a Character");
+
+{/* <h1 id="main-title">SUPER SMASH BROTHERS</h1>
+<div id="character-div"></div>
+<div id="button-box"></div>
+<form id="search-character-form">
+<input type="text" placeholder="Search for a Character" id="search-character">
+<input type="submit" name="submit" id="search-submit">
+</form>
+<button id="refresh">
+Reload Characters
+</button>
+<div id="character-selected"></div> */}
+
+//create Game buttons and append to DOM
+function createButtons() {
+  gameList = ["SSB", "Melee", "Brawl", "SSB4", "Ultimate"];
+  gameList.forEach(game => {
+    const gameButton = document.createElement("button");
+    gameButton.className = "game-button";
+    gameButton.id = game;
+    gameButton.textContent = game;
+    document.getElementById("button-box").appendChild(gameButton);
+  })  
 }
 
 /**  START UP **/
 document.addEventListener("DOMContentLoaded", async () => {
   await getCharacterList();  
+  createButtons();
   fillCharacterScreen();
   
   buttonBoxArray().forEach(button => button.addEventListener("click", createButtonEvent))
